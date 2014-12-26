@@ -27,7 +27,7 @@ public class HttpSample implements Serializable, Comparable<HttpSample> {
 	private double sizeInKb;
 
 	// Summarizer fields
-	private long threadNum;
+	private int threadNum;
 
 	private long summarizerMin;
 
@@ -137,11 +137,11 @@ public class HttpSample implements Serializable, Comparable<HttpSample> {
 		return errorObtained;
 	}
 
-	public long getThreadNum() {
+	public int getThreadNum() {
 		return threadNum;
 	}
 
-	public void setThreadNum(long threadNum) {
+	public void setThreadNum(int threadNum) {
 		if (this.threadNum < threadNum) {
 			this.threadNum = threadNum;
 		}
