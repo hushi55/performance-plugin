@@ -134,7 +134,7 @@ public class JMeterParser extends PerformanceReportParser {
                 ? attributes.getValue("rc") : "0");
               sample.setSizeInKb(attributes.getValue("by") != null ? Double.valueOf(attributes.getValue("by")) / 1024d : 0d);
 
-              this.getThreadNum(attributes);
+              sample.setThreadNum(this.getThreadNum(attributes));
 
               if (counter == 0) {
                 currentSample = sample;
