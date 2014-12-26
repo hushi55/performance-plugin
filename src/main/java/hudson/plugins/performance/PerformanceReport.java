@@ -451,7 +451,7 @@ public class PerformanceReport extends AbstractReport implements Serializable,
 	}
 
 	@Override
-	public double getThreadNum() {
+	public int getThreadNum() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

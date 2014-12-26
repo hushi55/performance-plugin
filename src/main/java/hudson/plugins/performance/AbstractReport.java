@@ -139,5 +139,5 @@ public abstract class AbstractReport {
 
   abstract public double getTps();
 
-  abstract public double getThreadNum();
+  abstract public int getThreadNum();
 }
