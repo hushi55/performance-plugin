@@ -1,0 +1,189 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
+	xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form"
+	xmlns:jm="/hudson/plugins/performance/tags">
+
+<style type="text/css">
+	kingdee table {
+      border-collapse: collapse;
+    }
+
+    kingdee table tr td, table tr th {
+    }
+
+    kingdee table tr th {
+      font-weight: bold;
+      text-align: left;
+      background: #a6caf0;
+      white-space: nowrap;
+    }
+
+    kingdee table tr td {
+      background: #eeeee0;
+      text-align: left;
+      white-space: nowrap;
+    }
+</style>
+
+<kingdee>
+<table>
+
+	<tr>
+          <th colspan="2">General</th>
+        </tr>
+  <tr>
+    <td>${%URI}</td>
+    <td>${it.uri}</td>
+
+    </tr>
+  <tr>
+    <td>${%Samples}</td>
+    <td>${it.size()}</td>
+
+    </tr>
+  <tr>
+    <td>${%Samples diff}</td>
+    <td>${it.getSizeDiff()}</td>
+
+    </tr>
+
+		<tr>
+          <th colspan="2">Response duration quantiles (ms)</th>
+        </tr>
+  <tr>
+    <td>${%Line10} (ms)</td>
+    <td>${it.get10Line()}</td>
+
+    </tr>
+  <tr>
+    <td>${%Line20} (ms)</td>
+    <td>${it.get20Line()}</td>
+
+    </tr>
+    <tr>
+    <td>${%Line30} (ms)</td>
+    <td>${it.get30Line()}</td>
+
+    </tr>
+
+    <tr>
+    <td>${%Line40} (ms)</td>
+    <td>${it.get40Line()}</td>
+
+    </tr>
+
+    <tr>
+    <td>${%Line50} (ms)</td>
+    <td>${it.get50Line()}</td>
+
+    </tr>
+    <tr>
+    <td>${%Line60} (ms)</td>
+    <td>${it.get60Line()}</td>
+
+    </tr>
+
+    <tr>
+    <td>${%Line75} (ms)</td>
+    <td>${it.get75Line()}</td>
+
+    </tr>
+
+    <tr>
+    <td>${%Line90} (ms)</td>
+    <td>${it.get90Line()}</td>
+
+    </tr>
+
+    <tr>
+    <td>${%Line95} (ms)</td>
+    <td>${it.get95Line()}</td>
+
+    </tr>
+
+     <tr>
+    <td>${%Line98} (ms)</td>
+    <td>${it.get98Line()}</td>
+
+    </tr>
+
+    <tr>
+    <td>${%Line99} (ms)</td>
+    <td>${it.get99Line()}</td>
+
+    </tr>
+
+     <tr>
+    <td>${%Line999} (ms)</td>
+    <td>${it.get999Line()}</td>
+
+    </tr>
+
+  <tr>
+    <td>${%Minimum} (ms)</td>
+    <td>${it.getMin()}</td>
+
+    </tr>
+  <tr>
+    <td>${%Maximum} (ms)</td>
+    <td>${it.getMax()}</td>
+
+    </tr>
+
+    <tr>
+    <td>${%Average} (ms)</td>
+    <td>${it.getAverage()}</td>
+
+    </tr>
+  <tr>
+    <td>${%Average diff} (ms)</td>
+    <td>${it.getAverageDiff()}</td>
+
+    </tr>
+  <tr>
+    <td>${%Median} (ms)</td>
+    <td>${it.getMedian()}</td>
+
+    </tr>
+  <tr>
+    <td>${%Median diff} (ms)</td>
+    <td>${it.getMedianDiff()}</td>
+
+    </tr>
+
+	 <tr>
+          <th colspan="2">Status codes:</th>
+        </tr>
+
+  <tr>
+    <td>${%Http Code}</td>
+    <td>${it.getHttpCode()}</td>
+
+    </tr>
+  <tr>
+    <td>${%Previous Http Code}</td>
+    <td>${it.getLastBuildHttpCodeIfChanged()}</td>
+
+    </tr>
+  <tr>
+    <td>${%Errors} (%)</td>
+    <td>${it.errorPercent()} %</td>
+
+    </tr>
+  <tr>
+    <td>${%Errors diff} (%)</td>
+    <td>${it.getErrorPercentDiff()} %</td>
+
+    </tr>
+  <tr>
+    <td>${%Average} (KB)</td>
+    <td>${it.getAverageSizeInKb()}</td>
+
+    </tr>
+  <tr>
+    <td>${%Total} (KB)</td>
+    <td>${it.getTotalTrafficInKb()}</td>
+
+    </tr>
+</table>
+</kingdee>
+</j:jelly>
