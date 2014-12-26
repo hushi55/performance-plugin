@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 /**
  * Information about a particular HTTP request and how that went.
- * 
+ *
  * This object belongs under {@link UriReport}.
  */
 public class HttpSample implements Serializable, Comparable<HttpSample> {
@@ -27,6 +27,8 @@ public class HttpSample implements Serializable, Comparable<HttpSample> {
 	private double sizeInKb;
 
 	// Summarizer fields
+	private long threadNum;
+
 	private long summarizerMin;
 
 	private long summarizerMax;
@@ -133,5 +135,15 @@ public class HttpSample implements Serializable, Comparable<HttpSample> {
 
 	public boolean isErrorObtained() {
 		return errorObtained;
+	}
+
+	public long getThreadNum() {
+		return threadNum;
+	}
+
+	public void setThreadNum(long threadNum) {
+		if (this.threadNum < threadNum) {
+			this.threadNum = threadNum;
+		}
 	}
 }

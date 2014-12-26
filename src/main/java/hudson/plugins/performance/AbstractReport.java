@@ -136,4 +136,8 @@ public abstract class AbstractReport {
   abstract public String getLastBuildHttpCodeIfChanged();
 
   abstract public int getSizeDiff();
+
+  abstract public double getTps();
+
+  abstract public double getThreadNum();
 }

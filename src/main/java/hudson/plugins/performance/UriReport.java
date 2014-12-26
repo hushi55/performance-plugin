@@ -7,6 +7,7 @@ import hudson.util.ChartUtil;
 import java.io.UnsupportedEncodingException;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.*;
 import java.text.DecimalFormat;
@@ -35,6 +36,7 @@ public class UriReport extends AbstractReport implements  Serializable, ModelObj
    * Individual HTTP invocations to this URI and how they went.
    */
   private final List<HttpSample> httpSampleList = new ArrayList<HttpSample>();
+  private volatile boolean sorted = false;
 
   /**
    * The parent object to which this object belongs.
@@ -100,7 +102,7 @@ public class UriReport extends AbstractReport implements  Serializable, ModelObj
 
   public long get90Line() {
     long result = 0;
-    Collections.sort(httpSampleList);
+    sortSamples();
     if (httpSampleList.size() > 0) {
       result = httpSampleList.get((int) (httpSampleList.size() * .9)).getDuration();
     }
@@ -121,7 +123,7 @@ public class UriReport extends AbstractReport implements  Serializable, ModelObj
 
   public long getMedian() {
     long result = 0;
-    Collections.sort(httpSampleList);
+    sortSamples();
     if (httpSampleList.size() > 0) {
       result = httpSampleList.get((int) (httpSampleList.size() * .5)).getDuration();
     }
@@ -313,7 +315,7 @@ public class UriReport extends AbstractReport implements  Serializable, ModelObj
 	@Override
 	public long get999Line() {
 		long result = 0;
-	    Collections.sort(httpSampleList);
+	    sortSamples();
 	    if (httpSampleList.size() > 0) {
 	      result = httpSampleList.get((int) (httpSampleList.size() * .999)).getDuration();
 	    }
@@ -323,7 +325,7 @@ public class UriReport extends AbstractReport implements  Serializable, ModelObj
 	@Override
 	public long get99Line() {
 		long result = 0;
-	    Collections.sort(httpSampleList);
+	    sortSamples();
 	    if (httpSampleList.size() > 0) {
 	      result = httpSampleList.get((int) (httpSampleList.size() * .99)).getDuration();
 	    }
@@ -333,7 +335,7 @@ public class UriReport extends AbstractReport implements  Serializable, ModelObj
 	@Override
 	public long get98Line() {
 		long result = 0;
-	    Collections.sort(httpSampleList);
+	    sortSamples();
 	    if (httpSampleList.size() > 0) {
 	      result = httpSampleList.get((int) (httpSampleList.size() * .98)).getDuration();
 	    }
@@ -343,7 +345,7 @@ public class UriReport extends AbstractReport implements  Serializable, ModelObj
 	@Override
 	public long get95Line() {
 		long result = 0;
-	    Collections.sort(httpSampleList);
+	    sortSamples();
 	    if (httpSampleList.size() > 0) {
 	      result = httpSampleList.get((int) (httpSampleList.size() * .95)).getDuration();
 	    }
@@ -353,7 +355,7 @@ public class UriReport extends AbstractReport implements  Serializable, ModelObj
 	@Override
 	public long get75Line() {
 		long result = 0;
-	    Collections.sort(httpSampleList);
+	    sortSamples();
 	    if (httpSampleList.size() > 0) {
 	      result = httpSampleList.get((int) (httpSampleList.size() * .75)).getDuration();
 	    }
@@ -363,7 +365,7 @@ public class UriReport extends AbstractReport implements  Serializable, ModelObj
 	@Override
 	public long get60Line() {
 		long result = 0;
-	    Collections.sort(httpSampleList);
+	    sortSamples();
 	    if (httpSampleList.size() > 0) {
 	      result = httpSampleList.get((int) (httpSampleList.size() * .60)).getDuration();
 	    }
@@ -373,7 +375,7 @@ public class UriReport extends AbstractReport implements  Serializable, ModelObj
 	@Override
 	public long get50Line() {
 		long result = 0;
-	    Collections.sort(httpSampleList);
+	    sortSamples();
 	    if (httpSampleList.size() > 0) {
 	      result = httpSampleList.get((int) (httpSampleList.size() * .50)).getDuration();
 	    }
@@ -383,7 +385,7 @@ public class UriReport extends AbstractReport implements  Serializable, ModelObj
 	@Override
 	public long get40Line() {
 		long result = 0;
-	    Collections.sort(httpSampleList);
+	    sortSamples();
 	    if (httpSampleList.size() > 0) {
 	      result = httpSampleList.get((int) (httpSampleList.size() * .40)).getDuration();
 	    }
@@ -393,7 +395,7 @@ public class UriReport extends AbstractReport implements  Serializable, ModelObj
 	@Override
 	public long get30Line() {
 		long result = 0;
-	    Collections.sort(httpSampleList);
+	    sortSamples();
 	    if (httpSampleList.size() > 0) {
 	      result = httpSampleList.get((int) (httpSampleList.size() * .30)).getDuration();
 	    }
@@ -403,21 +405,64 @@ public class UriReport extends AbstractReport implements  Serializable, ModelObj
 	@Override
 	public long get20Line() {
 		long result = 0;
-	    Collections.sort(httpSampleList);
+	    sortSamples();
 	    if (httpSampleList.size() > 0) {
 	      result = httpSampleList.get((int) (httpSampleList.size() * .20)).getDuration();
 	    }
 	    return result;
 	}
 
+	private void sortSamples() {
+		if (!this.sorted) {
+			Collections.sort(httpSampleList);
+		}
+	}
+
 	@Override
 	public long get10Line() {
 		long result = 0;
-	    Collections.sort(httpSampleList);
+	    sortSamples();
 	    if (httpSampleList.size() > 0) {
 	      result = httpSampleList.get((int) (httpSampleList.size() * .10)).getDuration();
 	    }
 	    return result;
+	}
+
+	@Override
+	public double getTps() {
+
+		long successCount = 0;
+		double average = 0.0;
+		double tps = 0.0;
+		long totalTime = 0;
+		for (HttpSample currentSample : httpSampleList) {
+			//=======================================================
+			/**
+			 * calculate the throughout per second
+			 */
+			if (currentSample.isSuccessful()) {
+				successCount++;
+				totalTime += currentSample.getDuration();
+			}
+		}
+
+		average = totalTime / successCount;
+		average/=1000;
+		tps = successCount / average;
+		BigDecimal bg = new BigDecimal(tps);
+		bg = bg.setScale(2,BigDecimal.ROUND_UP);
+
+	    return bg.doubleValue();
+	}
+
+	@Override
+	public double getThreadNum() {
+		if (this.httpSampleList != null) {
+			if (this.httpSampleList.get(0) != null) {
+				return this.httpSampleList.get(0).getThreadNum();
+			}
+		}
+		return 0;
 	}
 
 }

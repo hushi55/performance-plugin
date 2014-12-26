@@ -133,12 +133,31 @@ public class JMeterParser extends PerformanceReportParser {
               sample.setHttpCode(attributes.getValue("rc") != null && attributes.getValue("rc").length() <= 3
                 ? attributes.getValue("rc") : "0");
               sample.setSizeInKb(attributes.getValue("by") != null ? Double.valueOf(attributes.getValue("by")) / 1024d : 0d);
+
+              this.getThreadNum(attributes);
+
               if (counter == 0) {
                 currentSample = sample;
               }
               counter++;
             }
           }
+
+          private int getThreadNum(Attributes atts) {
+  			int threadNum;
+  			String threadNumstr = atts.getValue("tn");
+  			int index = threadNumstr.indexOf("-");
+  			String subTn = threadNumstr.substring(index + 1,
+  					threadNumstr.length());
+  			try {
+  				threadNum = Integer.valueOf(subTn);
+  				// System.out.println("threadNum: "+threadNum);
+  			} catch (Exception e) {
+  				LOGGER.warning("Error parsing thread number " + threadNumstr);
+  				threadNum = 0;
+  			}
+  			return threadNum;
+  		}
 
           @Override
           public void endElement(String uri, String localName, String qName) {

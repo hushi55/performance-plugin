@@ -6,6 +6,7 @@ import org.xml.sax.SAXException;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -35,6 +36,9 @@ public class PerformanceReport extends AbstractReport implements Serializable,
   private final Map<String, UriReport> uriReportMap = new LinkedHashMap<String, UriReport>();
 
   private PerformanceReport lastBuildReport;
+
+  // cache sort samples for performance
+  private volatile List<HttpSample> sortReports;
 
   public void addSample(HttpSample pHttpSample) throws SAXException {
     String uri = pHttpSample.getUri();
@@ -114,11 +118,7 @@ public class PerformanceReport extends AbstractReport implements Serializable,
     long result = 0;
     int size = size();
     if (size != 0) {
-      List<HttpSample> allSamples = new ArrayList<HttpSample>();
-      for (UriReport currentReport : uriReportMap.values()) {
-        allSamples.addAll(currentReport.getHttpSampleList());
-      }
-      Collections.sort(allSamples);
+      List<HttpSample> allSamples = getSortReports();
       result = allSamples.get((int) (allSamples.size() * .9)).getDuration();
     }
     return result;
@@ -128,11 +128,7 @@ public class PerformanceReport extends AbstractReport implements Serializable,
 	  long result = 0;
 	  int size = size();
 	  if (size != 0) {
-		  List<HttpSample> allSamples = new ArrayList<HttpSample>();
-		  for (UriReport currentReport : uriReportMap.values()) {
-			  allSamples.addAll(currentReport.getHttpSampleList());
-		  }
-		  Collections.sort(allSamples);
+		  List<HttpSample> allSamples = getSortReports();
 		  result = allSamples.get((int) (allSamples.size() * .999)).getDuration();
 	  }
 	  return result;
@@ -142,11 +138,7 @@ public class PerformanceReport extends AbstractReport implements Serializable,
 	  long result = 0;
 	  int size = size();
 	  if (size != 0) {
-		  List<HttpSample> allSamples = new ArrayList<HttpSample>();
-		  for (UriReport currentReport : uriReportMap.values()) {
-			  allSamples.addAll(currentReport.getHttpSampleList());
-		  }
-		  Collections.sort(allSamples);
+		  List<HttpSample> allSamples = getSortReports();
 		  result = allSamples.get((int) (allSamples.size() * .99)).getDuration();
 	  }
 	  return result;
@@ -156,11 +148,7 @@ public class PerformanceReport extends AbstractReport implements Serializable,
 	  long result = 0;
 	  int size = size();
 	  if (size != 0) {
-		  List<HttpSample> allSamples = new ArrayList<HttpSample>();
-		  for (UriReport currentReport : uriReportMap.values()) {
-			  allSamples.addAll(currentReport.getHttpSampleList());
-		  }
-		  Collections.sort(allSamples);
+		  List<HttpSample> allSamples = getSortReports();
 		  result = allSamples.get((int) (allSamples.size() * .98)).getDuration();
 	  }
 	  return result;
@@ -170,11 +158,7 @@ public class PerformanceReport extends AbstractReport implements Serializable,
 	  long result = 0;
 	  int size = size();
 	  if (size != 0) {
-		  List<HttpSample> allSamples = new ArrayList<HttpSample>();
-		  for (UriReport currentReport : uriReportMap.values()) {
-			  allSamples.addAll(currentReport.getHttpSampleList());
-		  }
-		  Collections.sort(allSamples);
+		  List<HttpSample> allSamples = getSortReports();
 		  result = allSamples.get((int) (allSamples.size() * .95)).getDuration();
 	  }
 	  return result;
@@ -184,11 +168,7 @@ public class PerformanceReport extends AbstractReport implements Serializable,
 	  long result = 0;
 	  int size = size();
 	  if (size != 0) {
-		  List<HttpSample> allSamples = new ArrayList<HttpSample>();
-		  for (UriReport currentReport : uriReportMap.values()) {
-			  allSamples.addAll(currentReport.getHttpSampleList());
-		  }
-		  Collections.sort(allSamples);
+		  List<HttpSample> allSamples = getSortReports();
 		  result = allSamples.get((int) (allSamples.size() * .75)).getDuration();
 	  }
 	  return result;
@@ -198,11 +178,7 @@ public class PerformanceReport extends AbstractReport implements Serializable,
 	  long result = 0;
 	  int size = size();
 	  if (size != 0) {
-		  List<HttpSample> allSamples = new ArrayList<HttpSample>();
-		  for (UriReport currentReport : uriReportMap.values()) {
-			  allSamples.addAll(currentReport.getHttpSampleList());
-		  }
-		  Collections.sort(allSamples);
+		  List<HttpSample> allSamples = getSortReports();
 		  result = allSamples.get((int) (allSamples.size() * .6)).getDuration();
 	  }
 	  return result;
@@ -212,25 +188,35 @@ public class PerformanceReport extends AbstractReport implements Serializable,
 	  long result = 0;
 	  int size = size();
 	  if (size != 0) {
-		  List<HttpSample> allSamples = new ArrayList<HttpSample>();
-		  for (UriReport currentReport : uriReportMap.values()) {
-			  allSamples.addAll(currentReport.getHttpSampleList());
-		  }
-		  Collections.sort(allSamples);
+		  List<HttpSample> allSamples = getSortReports();
 		  result = allSamples.get((int) (allSamples.size() * .5)).getDuration();
 	  }
 	  return result;
   }
 
+	private List<HttpSample> getSortReports() {
+
+		if (this.sortReports == null) {
+			List<HttpSample> allSamples = new ArrayList<HttpSample>();
+			  for (UriReport currentReport : uriReportMap.values()) {
+				  allSamples.addAll(currentReport.getHttpSampleList());
+			  }
+			  Collections.sort(allSamples);
+
+			  this.sortReports = allSamples;
+
+			return allSamples;
+		} else {
+			return this.sortReports;
+		}
+
+	}
+
   public long get40Line() {
 	  long result = 0;
 	  int size = size();
 	  if (size != 0) {
-		  List<HttpSample> allSamples = new ArrayList<HttpSample>();
-		  for (UriReport currentReport : uriReportMap.values()) {
-			  allSamples.addAll(currentReport.getHttpSampleList());
-		  }
-		  Collections.sort(allSamples);
+		  List<HttpSample> allSamples = getSortReports();
 		  result = allSamples.get((int) (allSamples.size() * .4)).getDuration();
 	  }
 	  return result;
@@ -240,11 +226,7 @@ public class PerformanceReport extends AbstractReport implements Serializable,
 	  long result = 0;
 	  int size = size();
 	  if (size != 0) {
-		  List<HttpSample> allSamples = new ArrayList<HttpSample>();
-		  for (UriReport currentReport : uriReportMap.values()) {
-			  allSamples.addAll(currentReport.getHttpSampleList());
-		  }
-		  Collections.sort(allSamples);
+		  List<HttpSample> allSamples = getSortReports();
 		  result = allSamples.get((int) (allSamples.size() * .3)).getDuration();
 	  }
 	  return result;
@@ -254,11 +236,7 @@ public class PerformanceReport extends AbstractReport implements Serializable,
 	  long result = 0;
 	  int size = size();
 	  if (size != 0) {
-		  List<HttpSample> allSamples = new ArrayList<HttpSample>();
-		  for (UriReport currentReport : uriReportMap.values()) {
-			  allSamples.addAll(currentReport.getHttpSampleList());
-		  }
-		  Collections.sort(allSamples);
+		  List<HttpSample> allSamples = getSortReports();
 		  result = allSamples.get((int) (allSamples.size() * .2)).getDuration();
 	  }
 	  return result;
@@ -268,11 +246,7 @@ public class PerformanceReport extends AbstractReport implements Serializable,
 	  long result = 0;
 	  int size = size();
 	  if (size != 0) {
-		  List<HttpSample> allSamples = new ArrayList<HttpSample>();
-		  for (UriReport currentReport : uriReportMap.values()) {
-			  allSamples.addAll(currentReport.getHttpSampleList());
-		  }
-		  Collections.sort(allSamples);
+		  List<HttpSample> allSamples = getSortReports();
 		  result = allSamples.get((int) (allSamples.size() * .1)).getDuration();
 	  }
 	  return result;
@@ -282,11 +256,7 @@ public class PerformanceReport extends AbstractReport implements Serializable,
     long result = 0;
     int size = size();
     if (size != 0) {
-      List<HttpSample> allSamples = new ArrayList<HttpSample>();
-      for (UriReport currentReport : uriReportMap.values()) {
-        allSamples.addAll(currentReport.getHttpSampleList());
-      }
-      Collections.sort(allSamples);
+      List<HttpSample> allSamples = getSortReports();
       result = allSamples.get((int) (allSamples.size() * .5)).getDuration();
     }
     return result;
@@ -450,4 +420,39 @@ public class PerformanceReport extends AbstractReport implements Serializable,
     DecimalFormat twoDForm = new DecimalFormat("#.##");
     return Double.valueOf(twoDForm.format(d));
   }
+
+	@Override
+	public double getTps() {
+		long successCount = 0;
+		double average = 0.0;
+		double tps = 0.0;
+		long totalTime = 0;
+		for (UriReport currentReport : uriReportMap.values()) {
+			for (HttpSample currentSample : currentReport.getHttpSampleList()) {
+				//=======================================================
+				/**
+				 * calculate the throughout per second
+				 */
+				if (currentSample.isSuccessful()) {
+					successCount++;
+					totalTime += currentSample.getDuration();
+				}
+			}
+		}
+
+		average = totalTime / successCount;
+		average/=1000;
+		tps = successCount / average;
+		BigDecimal bg = new BigDecimal(tps);
+		bg = bg.setScale(2,BigDecimal.ROUND_UP);
+
+	    return bg.doubleValue();
+
+	}
+
+	@Override
+	public double getThreadNum() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

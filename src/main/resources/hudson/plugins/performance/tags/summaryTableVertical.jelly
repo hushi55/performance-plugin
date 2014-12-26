@@ -28,7 +28,7 @@
 <table>
 
 	<tr>
-          <th colspan="2">General</th>
+       <th colspan="2">General</th>
         </tr>
   <tr>
     <td>${%URI}</td>
@@ -43,6 +43,26 @@
   <tr>
     <td>${%Samples diff}</td>
     <td>${it.getSizeDiff()}</td>
+    </tr>
+
+    <tr>
+    <td>${%Errors} (%)</td>
+    <td>${it.errorPercent()} %</td>
+
+    </tr>
+  <tr>
+    <td>${%Errors diff} (%)</td>
+    <td>${it.getErrorPercentDiff()} %</td>
+
+    </tr>
+  <tr>
+    <td>${%Thread Number} </td>
+    <td>${it.getThreadNum()}</td>
+
+    </tr>
+  <tr>
+    <td>${%tps}</td>
+    <td>${it.getTps()}</td>
 
     </tr>
 
@@ -118,6 +138,10 @@
 
     </tr>
 
+		<tr>
+          <th colspan="2">Response duration (ms)</th>
+        </tr>
+
   <tr>
     <td>${%Minimum} (ms)</td>
     <td>${it.getMin()}</td>
@@ -164,16 +188,11 @@
     <td>${it.getLastBuildHttpCodeIfChanged()}</td>
 
     </tr>
-  <tr>
-    <td>${%Errors} (%)</td>
-    <td>${it.errorPercent()} %</td>
 
-    </tr>
-  <tr>
-    <td>${%Errors diff} (%)</td>
-    <td>${it.getErrorPercentDiff()} %</td>
+	 <tr>
+          <th colspan="2">Response size (bytes):</th>
+        </tr>
 
-    </tr>
   <tr>
     <td>${%Average} (KB)</td>
     <td>${it.getAverageSizeInKb()}</td>
