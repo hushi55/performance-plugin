@@ -48,7 +48,7 @@
 
 			<!-- document too big  -->
           <j:choose>
-          <j:when test="it.size() < 1000">
+          <j:when test="it.size() lt 1000">
             <th>${%URI}</th>
             <th>${%Http Code}</th>
             <th>${%Time}</th>
