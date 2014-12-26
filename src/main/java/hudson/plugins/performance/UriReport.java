@@ -21,7 +21,7 @@ import org.kohsuke.stapler.StaplerResponse;
 
 /**
  * A report about a particular tested URI.
- * 
+ *
  * This object belongs under {@link PerformanceReport}.
  */
 public class UriReport extends AbstractReport implements  Serializable, ModelObject,
@@ -46,7 +46,7 @@ public class UriReport extends AbstractReport implements  Serializable, ModelObj
    * as a token in URL.
    */
   private final String staplerUri;
-  
+
   private UriReport lastBuildUriReport;
 
   private String uri;
@@ -89,9 +89,9 @@ public class UriReport extends AbstractReport implements  Serializable, ModelObj
     }
     return average / size();
   }
-  
-  public double getAverageSizeInKb(){ 
-	  double average = 0 ; 
+
+  public double getAverageSizeInKb(){
+	  double average = 0 ;
 	  for (HttpSample currentSample : httpSampleList) {
 	      average += currentSample.getSizeInKb();
 	    }
@@ -106,16 +106,16 @@ public class UriReport extends AbstractReport implements  Serializable, ModelObj
     }
     return result;
   }
-  
+
   public String getHttpCode() {
     String result = "";
-    
+
     for (HttpSample currentSample : httpSampleList) {
       if ( !result.matches( ".*"+currentSample.getHttpCode()+".*" ) ) {
           result += ( result.length() > 1 ) ? ","+currentSample.getHttpCode() : currentSample.getHttpCode();
       }
     }
-    
+
     return result;
   }
 
@@ -151,9 +151,9 @@ public class UriReport extends AbstractReport implements  Serializable, ModelObj
     }
     return max;
   }
-  
-  public double getTotalTrafficInKb(){ 
-	  double traffic = 0 ; 
+
+  public double getTotalTrafficInKb(){
+	  double traffic = 0 ;
 	  for (HttpSample currentSample : httpSampleList) {
 		  traffic += currentSample.getSizeInKb();
 	    }
@@ -182,7 +182,7 @@ public class UriReport extends AbstractReport implements  Serializable, ModelObj
     }
     return uri;
   }
-  
+
   public boolean isFailed() {
     return countErrors() != 0;
   }
@@ -206,40 +206,40 @@ public class UriReport extends AbstractReport implements  Serializable, ModelObj
   public void addLastBuildUriReport( UriReport lastBuildUriReport ) {
       this.lastBuildUriReport = lastBuildUriReport;
   }
-  
+
   public long getAverageDiff() {
       if ( lastBuildUriReport == null ) {
           return 0;
       }
       return getAverage() - lastBuildUriReport.getAverage();
   }
-  
+
   public long getMedianDiff() {
       if ( lastBuildUriReport == null ) {
           return 0;
       }
       return getMedian() - lastBuildUriReport.getMedian();
   }
-  
+
   public double getErrorPercentDiff() {
       if ( lastBuildUriReport == null ) {
           return 0;
       }
       return errorPercent() - lastBuildUriReport.errorPercent();
   }
-  
+
   public String getLastBuildHttpCodeIfChanged() {
       if ( lastBuildUriReport == null ) {
           return "";
       }
-      
+
       if ( lastBuildUriReport.getHttpCode().equals(getHttpCode()) ) {
           return "";
       }
-      
+
       return lastBuildUriReport.getHttpCode();
   }
-  
+
   public int getSizeDiff() {
       if ( lastBuildUriReport == null ) {
           return 0;
@@ -276,7 +276,7 @@ public class UriReport extends AbstractReport implements  Serializable, ModelObj
     for (HttpSample currentSample : httpSampleList) {
         nbError+=currentSample.getSummarizerErrors();
     }
-    return new DecimalFormat("#.##").format(nbError/getSummarizerSize()*100).replace(",", ".");     
+    return new DecimalFormat("#.##").format(nbError/getSummarizerSize()*100).replace(",", ".");
   }
 
 
@@ -288,7 +288,7 @@ public class UriReport extends AbstractReport implements  Serializable, ModelObj
         // TimeSeriesCollection err  = new TimeSeriesCollection();
          TimeSeries responseTime = new TimeSeries("Response Time", FixedMillisecond.class);
         // TimeSeries errors = new TimeSeries("errors", Minute.class);
-         
+
          for (int i=0; i<=this.httpSampleList.size()-1; i++) {
              RegularTimePeriod current = new FixedMillisecond(this.httpSampleList.get(i).getDate());
              responseTime.addOrUpdate(current,this.httpSampleList.get(i).getDuration());
@@ -302,12 +302,122 @@ public class UriReport extends AbstractReport implements  Serializable, ModelObj
 
             ChartUtil.generateGraph(request, response,
                                 PerformanceProjectAction.createSummarizerTrend(dataset, uri),400, 200);
-     
+
     }
 
     private double roundTwoDecimals(double d) {
         DecimalFormat twoDForm = new DecimalFormat("#.##");
   	  return Double.valueOf(twoDForm.format(d));
   	}
+
+	@Override
+	public long get999Line() {
+		long result = 0;
+	    Collections.sort(httpSampleList);
+	    if (httpSampleList.size() > 0) {
+	      result = httpSampleList.get((int) (httpSampleList.size() * .999)).getDuration();
+	    }
+	    return result;
+	}
+
+	@Override
+	public long get99Line() {
+		long result = 0;
+	    Collections.sort(httpSampleList);
+	    if (httpSampleList.size() > 0) {
+	      result = httpSampleList.get((int) (httpSampleList.size() * .99)).getDuration();
+	    }
+	    return result;
+	}
+
+	@Override
+	public long get98Line() {
+		long result = 0;
+	    Collections.sort(httpSampleList);
+	    if (httpSampleList.size() > 0) {
+	      result = httpSampleList.get((int) (httpSampleList.size() * .98)).getDuration();
+	    }
+	    return result;
+	}
+
+	@Override
+	public long get95Line() {
+		long result = 0;
+	    Collections.sort(httpSampleList);
+	    if (httpSampleList.size() > 0) {
+	      result = httpSampleList.get((int) (httpSampleList.size() * .95)).getDuration();
+	    }
+	    return result;
+	}
+
+	@Override
+	public long get75Line() {
+		long result = 0;
+	    Collections.sort(httpSampleList);
+	    if (httpSampleList.size() > 0) {
+	      result = httpSampleList.get((int) (httpSampleList.size() * .75)).getDuration();
+	    }
+	    return result;
+	}
+
+	@Override
+	public long get60Line() {
+		long result = 0;
+	    Collections.sort(httpSampleList);
+	    if (httpSampleList.size() > 0) {
+	      result = httpSampleList.get((int) (httpSampleList.size() * .60)).getDuration();
+	    }
+	    return result;
+	}
+
+	@Override
+	public long get50Line() {
+		long result = 0;
+	    Collections.sort(httpSampleList);
+	    if (httpSampleList.size() > 0) {
+	      result = httpSampleList.get((int) (httpSampleList.size() * .50)).getDuration();
+	    }
+	    return result;
+	}
+
+	@Override
+	public long get40Line() {
+		long result = 0;
+	    Collections.sort(httpSampleList);
+	    if (httpSampleList.size() > 0) {
+	      result = httpSampleList.get((int) (httpSampleList.size() * .40)).getDuration();
+	    }
+	    return result;
+	}
+
+	@Override
+	public long get30Line() {
+		long result = 0;
+	    Collections.sort(httpSampleList);
+	    if (httpSampleList.size() > 0) {
+	      result = httpSampleList.get((int) (httpSampleList.size() * .30)).getDuration();
+	    }
+	    return result;
+	}
+
+	@Override
+	public long get20Line() {
+		long result = 0;
+	    Collections.sort(httpSampleList);
+	    if (httpSampleList.size() > 0) {
+	      result = httpSampleList.get((int) (httpSampleList.size() * .20)).getDuration();
+	    }
+	    return result;
+	}
+
+	@Override
+	public long get10Line() {
+		long result = 0;
+	    Collections.sort(httpSampleList);
+	    if (httpSampleList.size() > 0) {
+	      result = httpSampleList.get((int) (httpSampleList.size() * .10)).getDuration();
+	    }
+	    return result;
+	}
 
 }

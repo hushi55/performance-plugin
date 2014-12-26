@@ -21,8 +21,12 @@
                 <jm:summaryTable it="${it}" />
               </j:otherwise>
             </j:choose>
+
         </tr>
       </table>
+
+      <jm:summaryTableVertical it="${it}" />
+
       <h3>${%Performance samples}</h3>
       <table class="sortable source" border="1">
         <j:choose>
@@ -41,6 +45,10 @@
             </j:forEach>
           </j:when>
           <j:otherwise>
+
+			<!-- document too big  -->
+          <j:choose>
+          <j:when test="it.size() < 1000">
             <th>${%URI}</th>
             <th>${%Http Code}</th>
             <th>${%Time}</th>
@@ -53,6 +61,9 @@
                 <td>${c.duration} ms.</td>
                 </tr>
             </j:forEach>
+            </j:when>
+          </j:choose>
+
           </j:otherwise>
         </j:choose>
       </table>

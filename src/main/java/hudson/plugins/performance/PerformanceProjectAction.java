@@ -447,6 +447,30 @@ public final class PerformanceProjectAction implements Action {
             Messages.ProjectAction_Average(), label);
         dataSetBuilderAverage.add(performanceReport.get90Line(),
             Messages.ProjectAction_Line90(), label);
+//        dataSetBuilderAverage.add(Math.round(performanceReport.get999Line()),
+//                Messages.ProjectAction_Line999(), label);
+//        dataSetBuilderAverage.add(Math.round(performanceReport.get99Line()),
+//        		Messages.ProjectAction_Line99(), label);
+//        dataSetBuilderAverage.add(Math.round(performanceReport.get98Line()),
+//        		Messages.ProjectAction_Line98(), label);
+//        dataSetBuilderAverage.add(Math.round(performanceReport.get95Line()),
+//        		Messages.ProjectAction_Line95(), label);
+//        dataSetBuilderAverage.add(Math.round(performanceReport.get90Line()),
+//        		Messages.ProjectAction_Line90(), label);
+//        dataSetBuilderAverage.add(Math.round(performanceReport.get75Line()),
+//        		Messages.ProjectAction_Line75(), label);
+//        dataSetBuilderAverage.add(Math.round(performanceReport.get60Line()),
+//        		Messages.ProjectAction_Line60(), label);
+//        dataSetBuilderAverage.add(Math.round(performanceReport.get50Line()),
+//        		Messages.ProjectAction_Line50(), label);
+//        dataSetBuilderAverage.add(Math.round(performanceReport.get40Line()),
+//        		Messages.ProjectAction_Line40(), label);
+//        dataSetBuilderAverage.add(Math.round(performanceReport.get30Line()),
+//        		Messages.ProjectAction_Line30(), label);
+//        dataSetBuilderAverage.add(Math.round(performanceReport.get20Line()),
+//        		Messages.ProjectAction_Line20(), label);
+//        dataSetBuilderAverage.add(Math.round(performanceReport.get10Line()),
+//        		Messages.ProjectAction_Line10(), label);
       }
       nbBuildsToAnalyze--;
       continue;
@@ -800,8 +824,30 @@ public final class PerformanceProjectAction implements Action {
             Messages.ProjectAction_Average(), label);
         dataSet.add(Math.round(report.getMedian()),
             Messages.ProjectAction_Median(), label);
+        dataSet.add(Math.round(report.get999Line()),
+            Messages.ProjectAction_Line999(), label);
+        dataSet.add(Math.round(report.get99Line()),
+        		Messages.ProjectAction_Line99(), label);
+        dataSet.add(Math.round(report.get98Line()),
+        		Messages.ProjectAction_Line98(), label);
+        dataSet.add(Math.round(report.get95Line()),
+        		Messages.ProjectAction_Line95(), label);
         dataSet.add(Math.round(report.get90Line()),
-            Messages.ProjectAction_Line90(), label);
+        		Messages.ProjectAction_Line90(), label);
+        dataSet.add(Math.round(report.get75Line()),
+        		Messages.ProjectAction_Line75(), label);
+        dataSet.add(Math.round(report.get60Line()),
+        		Messages.ProjectAction_Line60(), label);
+        dataSet.add(Math.round(report.get50Line()),
+        		Messages.ProjectAction_Line50(), label);
+        dataSet.add(Math.round(report.get40Line()),
+        		Messages.ProjectAction_Line40(), label);
+        dataSet.add(Math.round(report.get30Line()),
+        		Messages.ProjectAction_Line30(), label);
+        dataSet.add(Math.round(report.get20Line()),
+        		Messages.ProjectAction_Line20(), label);
+        dataSet.add(Math.round(report.get10Line()),
+        		Messages.ProjectAction_Line10(), label);
         dataSet.add(Math.round(report.getMin()),
             Messages.ProjectAction_Minimum(), label);
         dataSet.add(Math.round(report.getMax()),

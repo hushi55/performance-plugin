@@ -7,7 +7,18 @@
   <td class="${h.ifThenElse(it.getAverageDiff()>0,'red','green')}">${it.getAverageDiff()}</td>
   <td>${it.getMedian()}</td>
   <td class="${h.ifThenElse(it.getMedianDiff()>0,'red','green')}">${it.getMedianDiff()}</td>
+  <td>${it.get999Line()}</td>
+  <td>${it.get99Line()}</td>
+  <td>${it.get98Line()}</td>
+  <td>${it.get95Line()}</td>
   <td>${it.get90Line()}</td>
+  <td>${it.get75Line()}</td>
+  <td>${it.get60Line()}</td>
+  <td>${it.get50Line()}</td>
+  <td>${it.get40Line()}</td>
+  <td>${it.get30Line()}</td>
+  <td>${it.get20Line()}</td>
+  <td>${it.get10Line()}</td>
   <td>${it.getMin()}</td>
   <td>${it.getMax()}</td>
   <td>${it.getHttpCode()}</td>
@@ -16,4 +27,5 @@
   <td class="${h.ifThenElse(it.getErrorPercentDiff()>0,'red','green')}">${it.getErrorPercentDiff()} %</td>
   <td>${it.getAverageSizeInKb()}</td>
   <td>${it.getTotalTrafficInKb()}</td>
+
 </j:jelly>

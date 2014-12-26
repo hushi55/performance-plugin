@@ -17,7 +17,7 @@ import java.text.DecimalFormat;
 /**
  * Represents a single performance report, which consists of multiple
  * {@link UriReport}s for different URLs that was tested.
- * 
+ *
  * This object belongs under {@link PerformanceReportMap}.
  */
 public class PerformanceReport extends AbstractReport implements Serializable,
@@ -122,6 +122,160 @@ public class PerformanceReport extends AbstractReport implements Serializable,
       result = allSamples.get((int) (allSamples.size() * .9)).getDuration();
     }
     return result;
+  }
+
+  public long get999Line() {
+	  long result = 0;
+	  int size = size();
+	  if (size != 0) {
+		  List<HttpSample> allSamples = new ArrayList<HttpSample>();
+		  for (UriReport currentReport : uriReportMap.values()) {
+			  allSamples.addAll(currentReport.getHttpSampleList());
+		  }
+		  Collections.sort(allSamples);
+		  result = allSamples.get((int) (allSamples.size() * .999)).getDuration();
+	  }
+	  return result;
+  }
+
+  public long get99Line() {
+	  long result = 0;
+	  int size = size();
+	  if (size != 0) {
+		  List<HttpSample> allSamples = new ArrayList<HttpSample>();
+		  for (UriReport currentReport : uriReportMap.values()) {
+			  allSamples.addAll(currentReport.getHttpSampleList());
+		  }
+		  Collections.sort(allSamples);
+		  result = allSamples.get((int) (allSamples.size() * .99)).getDuration();
+	  }
+	  return result;
+  }
+
+  public long get98Line() {
+	  long result = 0;
+	  int size = size();
+	  if (size != 0) {
+		  List<HttpSample> allSamples = new ArrayList<HttpSample>();
+		  for (UriReport currentReport : uriReportMap.values()) {
+			  allSamples.addAll(currentReport.getHttpSampleList());
+		  }
+		  Collections.sort(allSamples);
+		  result = allSamples.get((int) (allSamples.size() * .98)).getDuration();
+	  }
+	  return result;
+  }
+
+  public long get95Line() {
+	  long result = 0;
+	  int size = size();
+	  if (size != 0) {
+		  List<HttpSample> allSamples = new ArrayList<HttpSample>();
+		  for (UriReport currentReport : uriReportMap.values()) {
+			  allSamples.addAll(currentReport.getHttpSampleList());
+		  }
+		  Collections.sort(allSamples);
+		  result = allSamples.get((int) (allSamples.size() * .95)).getDuration();
+	  }
+	  return result;
+  }
+
+  public long get75Line() {
+	  long result = 0;
+	  int size = size();
+	  if (size != 0) {
+		  List<HttpSample> allSamples = new ArrayList<HttpSample>();
+		  for (UriReport currentReport : uriReportMap.values()) {
+			  allSamples.addAll(currentReport.getHttpSampleList());
+		  }
+		  Collections.sort(allSamples);
+		  result = allSamples.get((int) (allSamples.size() * .75)).getDuration();
+	  }
+	  return result;
+  }
+
+  public long get60Line() {
+	  long result = 0;
+	  int size = size();
+	  if (size != 0) {
+		  List<HttpSample> allSamples = new ArrayList<HttpSample>();
+		  for (UriReport currentReport : uriReportMap.values()) {
+			  allSamples.addAll(currentReport.getHttpSampleList());
+		  }
+		  Collections.sort(allSamples);
+		  result = allSamples.get((int) (allSamples.size() * .6)).getDuration();
+	  }
+	  return result;
+  }
+
+  public long get50Line() {
+	  long result = 0;
+	  int size = size();
+	  if (size != 0) {
+		  List<HttpSample> allSamples = new ArrayList<HttpSample>();
+		  for (UriReport currentReport : uriReportMap.values()) {
+			  allSamples.addAll(currentReport.getHttpSampleList());
+		  }
+		  Collections.sort(allSamples);
+		  result = allSamples.get((int) (allSamples.size() * .5)).getDuration();
+	  }
+	  return result;
+  }
+
+  public long get40Line() {
+	  long result = 0;
+	  int size = size();
+	  if (size != 0) {
+		  List<HttpSample> allSamples = new ArrayList<HttpSample>();
+		  for (UriReport currentReport : uriReportMap.values()) {
+			  allSamples.addAll(currentReport.getHttpSampleList());
+		  }
+		  Collections.sort(allSamples);
+		  result = allSamples.get((int) (allSamples.size() * .4)).getDuration();
+	  }
+	  return result;
+  }
+
+  public long get30Line() {
+	  long result = 0;
+	  int size = size();
+	  if (size != 0) {
+		  List<HttpSample> allSamples = new ArrayList<HttpSample>();
+		  for (UriReport currentReport : uriReportMap.values()) {
+			  allSamples.addAll(currentReport.getHttpSampleList());
+		  }
+		  Collections.sort(allSamples);
+		  result = allSamples.get((int) (allSamples.size() * .3)).getDuration();
+	  }
+	  return result;
+  }
+
+  public long get20Line() {
+	  long result = 0;
+	  int size = size();
+	  if (size != 0) {
+		  List<HttpSample> allSamples = new ArrayList<HttpSample>();
+		  for (UriReport currentReport : uriReportMap.values()) {
+			  allSamples.addAll(currentReport.getHttpSampleList());
+		  }
+		  Collections.sort(allSamples);
+		  result = allSamples.get((int) (allSamples.size() * .2)).getDuration();
+	  }
+	  return result;
+  }
+
+  public long get10Line() {
+	  long result = 0;
+	  int size = size();
+	  if (size != 0) {
+		  List<HttpSample> allSamples = new ArrayList<HttpSample>();
+		  for (UriReport currentReport : uriReportMap.values()) {
+			  allSamples.addAll(currentReport.getHttpSampleList());
+		  }
+		  Collections.sort(allSamples);
+		  result = allSamples.get((int) (allSamples.size() * .1)).getDuration();
+	  }
+	  return result;
   }
 
   public long getMedian() {
@@ -264,7 +418,7 @@ public class PerformanceReport extends AbstractReport implements Serializable,
   /**
    * Check if the filename of the file being parsed is being parsed by a
    * summarized parser (JMeterSummarizer).
-   * 
+   *
    * @param filename
    *          name of the file being parsed
    * @return boolean indicating usage of summarized parser
@@ -287,7 +441,7 @@ public class PerformanceReport extends AbstractReport implements Serializable,
         .equals("Iago")) {
         return true;
       }
-      
+
     }
     return false;
   }

@@ -21,7 +21,18 @@
     <th>${%Average diff} (ms)</th>
     <th>${%Median} (ms)</th>
     <th>${%Median diff} (ms)</th>
+    <th>${%Line999} (ms)</th>
+    <th>${%Line99} (ms)</th>
+    <th>${%Line98} (ms)</th>
+    <th>${%Line95} (ms)</th>
     <th>${%Line90} (ms)</th>
+    <th>${%Line75} (ms)</th>
+    <th>${%Line60} (ms)</th>
+    <th>${%Line50} (ms)</th>
+    <th>${%Line40} (ms)</th>
+    <th>${%Line30} (ms)</th>
+    <th>${%Line20} (ms)</th>
+    <th>${%Line10} (ms)</th>
     <th>${%Minimum} (ms)</th>
     <th>${%Maximum} (ms)</th>
     <th>${%Http Code}</th>
