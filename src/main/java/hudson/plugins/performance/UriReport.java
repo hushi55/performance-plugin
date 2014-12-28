@@ -459,7 +459,7 @@ public class UriReport extends AbstractReport implements  Serializable, ModelObj
 	public int getThreadNum() {
 		if (this.httpSampleList != null) {
 			if (this.httpSampleList.get(0) != null) {
-				return this.httpSampleList.get(0).getThreadNum();
+				return this.httpSampleList.get(0).getAllThreadCount();
 			}
 		}
 		return 0;

@@ -27,7 +27,8 @@ public class HttpSample implements Serializable, Comparable<HttpSample> {
 	private double sizeInKb;
 
 	// Summarizer fields
-	private int threadNum;
+	private static volatile int AllThreadCount;
+	private String threanName;
 
 	private long summarizerMin;
 
@@ -137,13 +138,19 @@ public class HttpSample implements Serializable, Comparable<HttpSample> {
 		return errorObtained;
 	}
 
-	public int getThreadNum() {
-		return threadNum;
+	public static int getAllThreadCount() {
+		return AllThreadCount;
 	}
 
-	public void setThreadNum(int threadNum) {
-		if (this.threadNum < threadNum) {
-			this.threadNum = threadNum;
-		}
+	public static void setAllThreadCount(int allThreadCount) {
+		AllThreadCount = allThreadCount;
+	}
+
+	public String getThreanName() {
+		return threanName;
+	}
+
+	public void setThreanName(String threanName) {
+		this.threanName = threanName;
 	}
 }

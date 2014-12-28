@@ -134,7 +134,7 @@ public class JMeterParser extends PerformanceReportParser {
                 ? attributes.getValue("rc") : "0");
               sample.setSizeInKb(attributes.getValue("by") != null ? Double.valueOf(attributes.getValue("by")) / 1024d : 0d);
 
-              sample.setThreadNum(this.getThreadNum(attributes));
+              this.getThreadNum(sample, attributes);
 
               if (counter == 0) {
                 currentSample = sample;
@@ -143,7 +143,7 @@ public class JMeterParser extends PerformanceReportParser {
             }
           }
 
-          private int getThreadNum(Attributes atts) {
+          private int getThreadNum(HttpSample sample, Attributes atts) {
   			int threadNum;
   			String threadNumstr = atts.getValue("tn");
   			int index = threadNumstr.indexOf("-");
@@ -156,6 +156,10 @@ public class JMeterParser extends PerformanceReportParser {
   				LOGGER.warning("Error parsing thread number " + threadNumstr);
   				threadNum = 0;
   			}
+  			
+  			HttpSample.setAllThreadCount(threadNum);
+  			sample.setThreanName(threadNumstr);
+  			
   			return threadNum;
   		}
 
