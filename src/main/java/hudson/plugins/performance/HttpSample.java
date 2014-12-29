@@ -143,7 +143,9 @@ public class HttpSample implements Serializable, Comparable<HttpSample> {
 	}
 
 	public static void setAllThreadCount(int allThreadCount) {
-		AllThreadCount = allThreadCount;
+		if (AllThreadCount < allThreadCount) {
+			AllThreadCount = allThreadCount;
+		}
 	}
 
 	public String getThreanName() {
